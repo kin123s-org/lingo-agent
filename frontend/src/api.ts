@@ -24,10 +24,15 @@ export interface Job {
   approval_notes?: string | null;
 }
 
-// Vite 개발서버(47080)인 경우 백엔드 포트(47081)로 호스트 강제 변경
-const API_BASE = window.location.port === "47080"
-  ? "http://localhost:47081/api"
-  : "/api";
+// Vite 개발서버(47080)는 백엔드 포트(47081)를 직접 호출한다. 운영 경로는
+// Edge가 `/lingo`를 제거하므로 브라우저 URL에 맞춰 접두를 붙인다.
+export function apiBaseFor(pathname: string, port: string): string {
+  if (port === "47080") return "http://localhost:47081/api";
+  const prefix = pathname === "/lingo" || pathname.startsWith("/lingo/") ? "/lingo" : "";
+  return `${prefix}/api`;
+}
+
+const API_BASE = apiBaseFor(window.location.pathname, window.location.port);
 
 export async function getJobs(): Promise<Job[]> {
   const res = await fetch(`${API_BASE}/jobs`);

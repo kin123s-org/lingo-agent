@@ -159,6 +159,19 @@ POST /api/jobs
 3. 모든 대상 언어가 `lint=PASSED`, `qa_status=PASSED`, `quality_score>=85`, `is_fallback=false`일 때만 `REVIEW_READY`가 된다.
 4. `REVIEW_READY`에서 승인하면 `data/output/ko-KR.json`과 대상 언어 JSON이 생성된다. 그 외 상태에서는 승인할 수 없다.
 
+### 5.1 GoVail 경로와 기존 호스트 호환
+
+웹 데모의 공개 기본 UI 주소는 `https://govail.cloud/lingo/`로 둔다. `https://lingo.govail.cloud/`는 계속 같은 앱을 제공한다. 한 프론트엔드 빌드는 Vite의 상대 자산 경로(`base: './'`)를 사용한다. 앱이 `/lingo/` 아래에서 열린 때 API 호출은 `/lingo/api/*`를 사용하고, Edge는 접두를 제거해 FastAPI의 기존 `/api/*`로 전달한다. 기존 호스트에서는 기존 `/api/*` 호출을 유지한다. 백엔드 API, 작업 상태 및 데이터 모델은 변경하지 않는다.
+
+```mermaid
+flowchart LR
+  New["govail.cloud/lingo/*"] -->|"Edge가 /lingo 접두 제거"| App["FastAPI + Vite SPA"]
+  Old["lingo.govail.cloud/*"] -->|"기존 경로 그대로"| App
+  App -->|"/api/*"| Store["기존 API와 SQLite"]
+```
+
+두 주소 모두 GoVail Edge의 `master-admins` 보호를 유지한다. 앱 변경만으로 Edge 라우트·접근 정책이나 OIDC 클라이언트 설정이 자동 변경되는 것은 아니다. 이 웹 데모는 Lingo의 CLI 번역 게이트가 아니다.
+
 ## 6. API와 저장 모델
 
 | Method | Endpoint | 책임 |
