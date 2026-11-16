@@ -18,7 +18,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger("lingo")
 
-VERSION = "1.3.1"
+VERSION = "1.3.2"
 
 
 def build_parser() -> argparse.ArgumentParser:

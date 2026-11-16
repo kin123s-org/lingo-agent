@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.3.2] - 2026-11-16
+
+- 웹 콘솔을 `govail.cloud/lingo/` 아래에서도 제공하도록 상대 자산 경로와 경로 기반 API 접두를 지원합니다. `lingo.govail.cloud` 기존 주소는 기존 API 경로로 계속 동작합니다.
+
 ## [1.3.1] - 2026-10-12
 
 - LangGraph StateGraph와 `LangGraphRuntimeProvider`의 실제 구현을 독립 저장소 [`langgraph-process`](https://github.com/devcy0922/langgraph-process) `v0.1.0`으로 분리했다.
