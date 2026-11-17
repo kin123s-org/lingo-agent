@@ -11,7 +11,7 @@ RUN corepack enable && corepack prepare pnpm@10.34.5 --activate \
 FROM python:3.12-slim AS runtime
 WORKDIR /app
 
-ARG LINGO_VERSION=1.3.2
+ARG LINGO_VERSION=1.3.3
 ARG LINGO_GIT_SHA=unknown
 
 COPY backend/requirements.txt ./backend/requirements.txt
@@ -22,6 +22,7 @@ COPY --from=frontend-build /app/frontend/dist ./frontend/dist
 
 ENV HOST=0.0.0.0
 ENV LINGO_VERSION=${LINGO_VERSION} LINGO_GIT_SHA=${LINGO_GIT_SHA}
+LABEL org.opencontainers.image.version=${LINGO_VERSION} org.opencontainers.image.revision=${LINGO_GIT_SHA}
 EXPOSE 47081
 
 WORKDIR /app/backend

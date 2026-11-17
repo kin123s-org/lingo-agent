@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.3.3] - 2026-11-17
+
+- Docker image tag, OCI labels, runtime health identity, and Compose health check now use the same release version and deployment source SHA.
+- The web demo uses Compose health and runtime identity checks inside the container; its service port is not published on the host.
+
 ## [1.3.2] - 2026-11-16
 
 - 웹 콘솔을 `govail.cloud/lingo/` 아래에서도 제공하도록 상대 자산 경로와 경로 기반 API 접두를 지원합니다. `lingo.govail.cloud` 기존 주소는 기존 API 경로로 계속 동작합니다.

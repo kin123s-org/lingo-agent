@@ -40,6 +40,8 @@ flowchart TB
 
 `backend/` 및 `frontend/`는 중앙 번역 허브로서 작업 생성, 상태 모니터링, 직관적 Diff 비교 및 인간 승인(Human-in-the-loop)을 제공하는 웹 콘솔이다.
 
+웹 데모는 저장소 버전(`pyproject.toml`, `package.json`)을 Compose image tag, OCI version label, runtime `/healthz`에 함께 기록한다. 배포기는 checkout의 전체 revision을 `BUILD_GIT_SHA`로 주입해 OCI revision label과 runtime `git_sha`에 기록하며, 기존 secret `.env`의 낡은 `LINGO_VERSION` 값은 Compose의 명시적 environment가 덮는다. Compose health check와 IAC release identity는 컨테이너 내부 HTTP를 사용한다. 서비스 포트는 host에 공개하지 않고 Edge의 공유 Docker 네트워크에서만 접근한다.
+
 ## 2. CI 번역 처리 흐름
 
 ```mermaid
